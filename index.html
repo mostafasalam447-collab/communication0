@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication Bank - 150 Questions</title>
+    <title>Communication Bank - 150 Questions Full</title>
     <style>
         :root {
             --primary: #004a7c;
@@ -24,8 +24,10 @@
             align-items: center;
         }
 
+        /* العداد الثابت */
         .header-stats {
-            position: sticky;
+            position: -webkit-sticky;
+            position: sticky; 
             top: 0;
             z-index: 1000;
             background: var(--bg);
@@ -33,6 +35,7 @@
             display: flex;
             justify-content: center;
             padding: 10px 0;
+            border-bottom: 2px solid #ddd;
         }
 
         .stats-grid {
@@ -49,7 +52,6 @@
             border-radius: 8px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border: 1px solid #e0e0e0;
         }
 
         .stat-value {
@@ -83,7 +85,7 @@
         .q-number-badge {
             position: absolute;
             top: 15px;
-            left: 10px; /* موضع ثابت لليسار */
+            left: 10px;
             background: var(--secondary);
             color: white;
             width: 35px;
@@ -93,7 +95,6 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.9rem;
         }
 
         .question-text {
@@ -101,8 +102,7 @@
             color: var(--primary);
             font-weight: 600;
             margin-bottom: 20px;
-            margin-top: 5px;
-            margin-left: 45px; /* تم زيادة المسافة لإبعاد النص عن الدائرة */
+            margin-left: 55px; /* مسافة كافية لإبعاد السؤال عن الدائرة */
             line-height: 1.6;
             text-align: left;
             direction: ltr;
@@ -112,7 +112,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-left: 45px; /* محاذاة الخيارات مع السؤال */
+            margin-left: 55px;
         }
 
         .option-btn {
@@ -122,9 +122,9 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.95rem;
-            transition: all 0.2s;
             text-align: left;
             direction: ltr;
+            transition: 0.2s;
         }
 
         .option-btn:hover:not(:disabled) {
@@ -132,29 +132,8 @@
             border-color: var(--secondary);
         }
 
-        .correct {
-            background-color: #d4edda !important;
-            border-color: var(--success) !important;
-            color: #155724 !important;
-            font-weight: bold;
-        }
-
-        .wrong {
-            background-color: #f8d7da !important;
-            border-color: var(--danger) !important;
-            color: #721c24 !important;
-        }
-
-        .submit-all {
-            margin: 40px 0;
-            padding: 15px 40px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
+        .correct { background-color: #d4edda !important; border-color: var(--success) !important; color: #155724 !important; font-weight: bold; }
+        .wrong { background-color: #f8d7da !important; border-color: var(--danger) !important; color: #721c24 !important; }
     </style>
 </head>
 <body>
@@ -162,7 +141,7 @@
     <div class="header-stats">
         <div class="stats-grid">
             <div class="stat-card">
-                <span class="stat-value" id="stat-total">100</span>
+                <span class="stat-value">150</span>
                 <span class="stat-label">الإجمالي</span>
             </div>
             <div class="stat-card">
@@ -182,166 +161,164 @@
 
     <div class="questions-container" id="main-container"></div>
 
-    <button class="submit-all" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">العودة للأعلى</button>
-
 <script>
     const questions = [
         // 1-50
         { q: "As regards communication, barriers of messages include which of the following?", o: ["Easy messages", "Relevant messages", "Unclear messages", "Complete messages"], c: 2 },
-        { q: "Which of the following is the definition of motivation?", o: ["It is internal force that initiates and directs the individual to act in a certain manner to satisfy needs.", "It is external force", "Both 1 and 4", "Motivation starts with need, vision, dream"], c: 2 },
+        { q: "Which of the following is the definition of motivation?", o: ["Internal force that initiates and directs behavior", "External force", "Both 1 and 4", "Vision, dream"], c: 2 },
         { q: "As regards the role of the teacher, which of the following is not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
         { q: "Group approach method of education includes which of the following?", o: ["Television", "Home visit", "Lecture", "Internet"], c: 2 },
         { q: "As regards importance of motivation, which of the following is not correct?", o: ["Activate behavior", "Give direction", "Increase productivity", "Passive participation"], c: 3 },
-        { q: "Which is correct for essentials of communication?", o: ["Do not react instantly and mutter in anger", "Go to the conclusion", "Interrupt the speaker", "Use medical terminology difficult to be understood"], c: 0 },
-        { q: "Which of the following is considered correct for verbal communication?", o: ["Need words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
-        { q: "Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "More reliable than verbal communication", "Do not need observation", "Cannot be used with deaf and mute persons"], c: 1 },
-        { q: "Which is correct for an effective verbal communicator?", o: ["Encourages empathically", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
-        { q: "Which of the following are levels of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
-        { q: "Which of the following are correct for nonverbal communication?", o: ["Use body language", "Facial expression, eye contact and touch appearance", "Cannot use words", "All the above"], c: 3 },
-        { q: "Risk factors that cause health education problems include:", o: ["Good staff training", "Spend time to interact properly with clients", "Good interest in the subject", "Lack staff training"], c: 3 },
-        { q: "Group approach of health education include which of the following?", o: ["Internet", "Lectures, workshops and conferences", "Home visit", "Television"], c: 1 },
-        { q: "Which of the following are the advantages of group teaching?", o: ["Include small group only", "Economic and give positive attitude development", "High cost", "Lack of sharing between learners"], c: 1 },
-        { q: "As regards importance of motivation, which of the following is not correct?", o: ["Intrinsic force", "Give direction", "Increase productivity", "Extrinsic force"], c: 3 },
-        { q: "Defined as two-way process involving passing messages to and from between sender and receiver:", o: ["Motivation", "Communication", "Health education code of ethics", "Learning"], c: 1 },
-        { q: "Which of the following is considered correct for nonverbal communication?", o: ["Need words to express emotions", "Need observation and understanding", "Direct questioning", "Need voice"], c: 1 },
-        { q: "Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "Non reliable than verbal communication", "Do not need observation", "Use body language"], c: 3 },
-        { q: "Which is correct for an effective verbal communicator?", o: ["Direct clear questioning", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
-        { q: "Which of the following is a type of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
-        { q: "Which of the following is not correct about the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "Non appropriate channel"], c: 3 },
-        { q: "An effective verbal communicator include:", o: ["Clarifies, listens, acknowledges and repeats", "Relaxes", "Opens up", "Eye contact"], c: 0 },
-        { q: "Which of the following are the types of communication?", o: ["Verbal only", "Nonverbal only", "Intermediate", "Verbal and nonverbal"], c: 3 },
-        { q: "Which of the following are correct for verbal communication?", o: ["Use body language", "Use words in communication", "Facial expression, eye contact and touch appearance", "Cannot use words"], c: 1 },
-        { q: "Which of the following is not the level of communication?", o: ["Downward communication", "Upwards communication", "Lateral communication", "Vertical communication"], c: 2 },
-        { q: "Which of the following are characters of a good sender message in communication?", o: ["Choose appropriate communication channel", "Be interested in the subject", "Both 1 and 2", "Lack interest of subject"], c: 2 },
-        { q: "… is the person to whom messages is directed.", o: ["Sender", "Receiver", "Channel", "Messages"], c: 1 },
-        { q: "Final stage that the receiver replies to the sender according to understanding:", o: ["Sending", "Communication", "Feedback", "Receiving"], c: 2 },
-        { q: "As regards nonverbal communication advantages, which is correct?", o: ["Need words", "Do not need understanding or interpretation", "More reliable than verbal", "Need high voice"], c: 2 },
-        { q: "All the following are requirements of effective communication EXCEPT:", o: ["Clear messages", "Relevant messages", "Meaningful messages", "Non relevant messages"], c: 3 },
-        { q: "Criteria of effective nonverbal communicator include:", o: ["Use clear voice", "Establish eye contact with facial expression", "Use words", "Use meaningful speech"], c: 1 },
-        { q: "Which is considered as a barrier of communication:", o: ["Proper channel", "Improper channel", "Good channel", "Relevant channel"], c: 1 },
-        { q: "Teaching is defined as:", o: ["Interaction to bring expected changes in behavior", "Interaction between learners", "Interaction between groups", "Interaction between clients"], c: 0 },
-        { q: "As regard rules of motivation which is correct?", o: ["Do not finish what you start", "Do not socialize", "Take risk and set a major goal", "Do not learn how to learn"], c: 2 },
-        { q: "Which of the following is not a barrier of communication?", o: ["Lack of interest", "Good language use", "Anxiety", "Impaired visual channel"], c: 1 },
-        { q: "Which are considered barriers of messages in communication?", o: ["Difficult and irrelevant messages", "Very easy messages", "Clear messages", "Complete messages"], c: 0 },
-        { q: "For uncomfortable settings, which is correct?", o: ["Irrelevant", "Not essentials", "Are barriers of communication", "Receiver can concentrate"], c: 2 },
-        { q: "As regards upwards communication which is true?", o: ["From below downward", "Nondirective", "Give information", "All the above"], c: 3 },
-        { q: "Which is considered correct for verbal communication?", o: ["Need open-ended technique", "Close-ended technique", "Open and close-ended technique", "Not relevant"], c: 2 },
-        { q: "Which is correct for nonverbal communication?", o: ["Direct questioning", "Need words", "Less conscious control over behavior", "Good conscious control"], c: 2 },
-        { q: "Which is the characteristic of nonverbal communication?", o: ["Need good observation", "More reliable than verbal", "Need interpretation", "All the above"], c: 3 },
-        { q: "Which is the disadvantage of individual approach teaching?", o: ["High cost", "Economic", "Positive attitude development", "Low cost"], c: 0 },
-        { q: "Which is correct for the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "All the above"], c: 3 },
-        { q: "As regards communication, feedback should not be:", o: ["Absent feedback", "Relevant feedback", "Good feedback", "Complete feedback"], c: 0 },
-        { q: "Responsibility of sender is:", o: ["Discourage his receivers", "Encourage the receivers", "Has no relation", "Work alone"], c: 1 },
-        { q: "Which of the following is the definition of health education?", o: ["Experience designed to facilitate voluntary action", "Unvoluntary action", "It is force", "Unhealthy behavior"], c: 0 },
-        { q: "As regard the role of the teacher which is not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
-        { q: "As regard nonverbal communication represents:", o: ["90%", "80%", "70%", "10%"], c: 0 },
-        { q: "Which is considered correct for verbal communication?", o: ["Need words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
-        { q: "Which is the characteristic of nonverbal communication?", o: ["Easy communication", "NOT reliable", "Do not need observation", "Used with deaf and mute"], c: 1 },
+        { q: "Which is correct for essentials of communication?", o: ["Do not react instantly in anger", "Go to the conclusion", "Interrupt the speaker", "Use difficult medical terminology"], c: 0 },
+        { q: "Which of the following is considered correct for verbal communication?", o: ["Words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
+        { q: "Which is the characteristic of nonverbal communication?", o: ["Easy communication", "More reliable than verbal", "Do not need observation", "Cannot be used with deaf persons"], c: 1 },
+        { q: "Which is correct for an effective verbal communicator?", o: ["Encourages empathically", "Eye contact", "Facial expression", "Body language"], c: 0 },
+        { q: "Which of the following are levels of communication?", o: ["Downwards", "Upwards", "Horizontal", "All the above"], c: 3 },
+        { q: "Which of the following are correct for nonverbal communication?", o: ["Use body language", "Facial expression, touch appearance", "Cannot use words", "All the above"], c: 3 },
+        { q: "Risk factors causing health education problems include:", o: ["Good training", "Interaction time", "Interest", "Lack of staff training"], c: 3 },
+        { q: "Group approach of health education includes:", o: ["Internet", "Lectures, workshops", "Home visit", "Television"], c: 1 },
+        { q: "Advantages of group teaching include:", o: ["Small group only", "Economic and positive attitude", "High cost", "Lack of sharing"], c: 1 },
+        { q: "As regards importance of motivation, not correct?", o: ["Intrinsic force", "Give direction", "Increase productivity", "Extrinsic force"], c: 3 },
+        { q: "Two-way process of passing messages between sender and receiver:", o: ["Motivation", "Communication", "Ethics", "Learning"], c: 1 },
+        { q: "Considered correct for nonverbal communication?", o: ["Words for emotions", "Need observation", "Direct questioning", "Need voice"], c: 1 },
+        { q: "Characteristic of nonverbal communication?", o: ["Easy communication", "Non reliable", "No observation", "Use body language"], c: 3 },
+        { q: "Effective verbal communicator include:", o: ["Direct clear questioning", "Eye contact", "Facial expression", "Body language"], c: 0 },
+        { q: "Which of the following is a type of communication?", o: ["Downwards", "Upwards", "Horizontal", "All the above"], c: 3 },
+        { q: "Not correct about good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "Non appropriate channel"], c: 3 },
+        { q: "An effective verbal communicator include:", o: ["Clarifies, listens, acknowledges", "Relaxes", "Opens up", "Eye contact"], c: 0 },
+        { q: "Types of communication include:", o: ["Verbal only", "Nonverbal only", "Intermediate", "Verbal and nonverbal"], c: 3 },
+        { q: "Correct for verbal communication?", o: ["Body language", "Use words", "Facial expression", "Cannot use words"], c: 1 },
+        { q: "Not the level of communication?", o: ["Downward", "Upwards", "Lateral", "Vertical"], c: 2 },
+        { q: "Characters of good sender message?", o: ["Choose channel", "Be interested", "Both 1 and 2", "Lack interest"], c: 2 },
+        { q: "The person to whom messages is directed:", o: ["Sender", "Receiver", "Channel", "Message"], c: 1 },
+        { q: "Final stage where receiver replies to sender:", o: ["Sending", "Communication", "Feedback", "Receiving"], c: 2 },
+        { q: "Nonverbal communication advantages?", o: ["Need words", "No interpretation", "More reliable than verbal", "Need high voice"], c: 2 },
+        { q: "Requirements of effective communication EXCEPT:", o: ["Clear messages", "Relevant messages", "Meaningful", "Non relevant messages"], c: 3 },
+        { q: "Criteria of effective nonverbal communicator:", o: ["Clear voice", "Eye contact & facial expression", "Use words", "Meaningful speech"], c: 1 },
+        { q: "Considered as a barrier of communication:", o: ["Proper channel", "Improper channel", "Good channel", "Relevant channel"], c: 1 },
+        { q: "Teaching is defined as:", o: ["Interaction to bring changes in behavior", "Between learners", "Between groups", "Between clients"], c: 0 },
+        { q: "Rules of motivation which is correct?", o: ["Don't finish start", "Don't socialize", "Take risk and set major goal", "Don't learn how to learn"], c: 2 },
+        { q: "NOT a barrier of communication?", o: ["Lack of interest", "Good language use", "Anxiety", "Impaired visual channel"], c: 1 },
+        { q: "Barriers of messages include:", o: ["Difficult and irrelevant", "Easy messages", "Clear messages", "Complete messages"], c: 0 },
+        { q: "Uncomfortable settings are:", o: ["Irrelevant", "Not essentials", "Barriers of communication", "Receiver can concentrate"], c: 2 },
+        { q: "Upwards communication true?", o: ["Below downward", "Nondirective", "Give information", "All the above"], c: 3 },
+        { q: "Correct for verbal communication?", o: ["Open-ended", "Close-ended", "Open and close-ended", "Not relevant"], c: 2 },
+        { q: "Correct for nonverbal communication?", o: ["Direct questioning", "Need words", "Less conscious control over behavior", "Good control"], c: 2 },
+        { q: "Characteristic of nonverbal communication?", o: ["Good observation", "More reliable than verbal", "Need interpretation", "All the above"], c: 3 },
+        { q: "Disadvantage of individual teaching?", o: ["High cost", "Economic", "Positive attitude", "Low cost"], c: 0 },
+        { q: "Characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "All the above"], c: 3 },
+        { q: "Feedback should not be:", o: ["Absent feedback", "Relevant", "Good feedback", "Complete feedback"], c: 0 },
+        { q: "Responsibility of sender is:", o: ["Discourage", "Encourage the receivers", "No relation", "Work alone"], c: 1 },
+        { q: "Definition of health education?", o: ["Experience to facilitate voluntary action", "Unvoluntary", "It is force", "Unhealthy behavior"], c: 0 },
+        { q: "Role of teacher not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
+        { q: "Nonverbal communication represents:", o: ["90%", "80%", "70%", "10%"], c: 0 },
+        { q: "Considered correct for verbal communication?", o: ["Words for emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
+        { q: "Characteristic of nonverbal communication?", o: ["Easy", "NOT reliable", "No observation", "Deaf and mute"], c: 1 },
         
         // 51-100
-        { q: "Which is correct for an effective verbal communicator?", o: ["Encourages empathically", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
-        { q: "Which of the following is a level of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
-        { q: "Which of the following is correct about the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "All the above"], c: 3 },
-        { q: "Which of the following are correct for nonverbal communication?", o: ["Use body language", "Facial expression", "Eye contact", "All the above"], c: 3 },
-        { q: "Which of the following are considered methods of nonverbal communication?", o: ["Use high sounds", "Use clear words", "Use understanding words", "Use body language"], c: 3 },
-        { q: "Which of the following is considered true for verbal communication?", o: ["Use words in communication", "Eye to eye contact", "Facial expression", "Touch"], c: 0 },
-        { q: "For nonverbal communication, method which is not correct?", o: ["More reliable", "Not reliable", "Touch receiver", "Eye to eye contact"], c: 1 },
-        { q: "An effective verbal communication includes which of the following?", o: ["Clarifies, listens, acknowledges, and repeats", "Relax", "Open up", "Eye contact"], c: 0 },
-        { q: "Which of the following is the type of communication?", o: ["Verbal only", "Nonverbal only", "Intermediate", "Verbal and nonverbal communication"], c: 3 },
-        { q: "Which of the following is NOT the level of communication?", o: ["Downward communication", "Upwards communication", "Lateral communication", "Vertical communication"], c: 2 },
-        { q: "… defined as two-way process involving passing messages to and from between sender and receiver?", o: ["Motivation", "Communication", "Health education code of ethics", "Learning"], c: 1 },
-        { q: "Which of the following is not correct about the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "Non appropriate channel"], c: 3 },
-        { q: "Refers to the way by which the message is sent.", o: ["Channel", "Feedback", "Message", "Conversation"], c: 0 },
-        { q: "Which of the following are character of good senders?", o: ["Know the subject well", "Be interested in the subject", "Know the audience member", "All of the above"], c: 3 },
-        { q: "Which of the following are correct for verbal communication?", o: ["Use touch", "Use words in communication", "Facial expression", "Use eye contact"], c: 1 },
-        { q: "Which of the following is true for downward communication?", o: ["From seniors to juniors", "Directive", "Give orders", "All the above"], c: 3 },
-        { q: "Effective communication needs messages to be:", o: ["Timely", "Meaningful", "Both 1 and 2", "Not suitable to the situation"], c: 2 },
-        { q: "The upwards communication is:", o: ["From junior to senior", "From senior to junior", "Between students", "Directive"], c: 0 },
-        { q: "… is the final stage that the receiver replies to the sender according to understanding him to a particular topic", o: ["Sending", "Communication", "Feedback", "Receiving"], c: 2 },
-        { q: "As regard nonverbal communication advantages which is correct?", o: ["Need words", "Do not need understanding or interpretation", "Use with deaf and mute persons", "Need high voice"], c: 1 },
-        { q: "The following is character of good receiver:", o: ["Aware", "Interested, willing to accept message", "Understand the value of message", "All the above"], c: 3 },
-        { q: "Criteria of effective nonverbal communicator include which of the following?", o: ["Use clear voice", "Establish eye contact with appropriate facial expression", "Relaxes", "2 + 3"], c: 3 },
-        { q: "Health education code of ethics is defined as:", o: ["Framework of shared values within which health education is practiced", "Interaction between learners and clients", "Interaction between doctors", "Interaction between students"], c: 0 },
-        { q: "Which of the following is correct for good nonverbal communication?", o: ["Need good observation", "Good analysis", "Good interpretation", "All the above"], c: 3 },
-        { q: "Upward communication which is correct?", o: ["Nondirective", "From junior to senior", "Inform problem", "All the above"], c: 3 },
-        { q: "Which is correct for downward communication?", o: ["From senior to junior", "Nondirective", "From junior to senior", "Inform problem"], c: 0 },
-        { q: "Which is correct for lateral communication?", o: ["Between colleagues", "At the same level", "Share information to save time", "All the above"], c: 3 },
-        { q: "For good receiver, which is correct?", o: ["Should be aware", "Not listen well", "Neglect the subject", "Don't have interest"], c: 0 },
-        { q: "Which of the following are barriers for communication?", o: ["Have no interest", "Anxiety", "Impaired visual and auditory channel", "All the above"], c: 3 },
-        { q: "Which of the following are essentials for good communication?", o: ["Good atmosphere", "Comfortable setting", "Good light", "All the above"], c: 3 },
-        { q: "Effective communication requires message should be:", o: ["Hazy message", "Unclear message", "Irrelevant message", "Clear, concise, and accurate"], c: 3 },
-        { q: "Which of the following is considered correct for body language in communication?", o: ["Can use touch", "Cannot use eye contact", "Not important in communication", "Irrelevant"], c: 0 },
-        { q: "Which of the following is true for a student?", o: ["He is sender", "He is receiver", "He is teacher", "He cannot give feedback"], c: 1 },
-        { q: "… is basic component of human relationship.", o: ["Education", "Communication", "Teaching", "Learning"], c: 1 },
-        { q: "Which of the following is correct for teacher?", o: ["He is good sender", "He is receiver", "He is learner", "He is patient"], c: 0 },
-        { q: "What is the responsibility of health education?", o: ["To meet the challenges of the new millennium", "Has no role", "Has minimal role in maintaining health", "Cannot encourage his team"], c: 0 },
-        { q: "Which of the following are ways and methods of health education?", o: ["Direct methods only", "Indirect methods only", "Direct and indirect methods", "Mass media"], c: 2 },
-        { q: "What are the levels of health education?", o: ["Individual approach", "Group approach", "General approach", "All the above"], c: 3 },
-        { q: "Which are advantages of individual approach?", o: ["Flexibility", "Promote opportunity", "Building up motivation", "All the above"], c: 3 },
-        { q: "Which is correct for lateral communication?", o: ["Between colleagues", "From seniors", "From juniors", "From seniors to juniors"], c: 0 },
-        { q: "For good sender which is correct?", o: ["Should speak at the level of audience", "Not listen well", "Neglect the subject", "Do not have interest"], c: 0 },
-        { q: "Which of the following are disadvantages of individual health education?", o: ["High cost of teaching team", "Lack of sharing between team", "1 + 2", "Low cost"], c: 2 },
-        { q: "Which of the following are essentials for good communication?", o: ["Good atmosphere", "Comfortable setting", "Good light", "All the above"], c: 3 },
-        { q: "Small group teaching includes:", o: ["2–5 individuals", "6–30 individuals", "40 individuals", "60 individuals"], c: 0 },
-        { q: "Medium sized group include:", o: ["2–5 individuals", "6–30 individuals", "40 individuals", "60 individuals"], c: 1 },
-        { q: "Which of the following is true for large group teaching?", o: ["Economic", "Foster positive attitude of development", "Mass media", "All the above"], c: 3 },
-        { q: "Prenatal care is considered:", o: ["Small size group of health education", "Medium sized group", "Large size group", "Learning"], c: 2 },
-        { q: "Which of the following is correct for individual approach?", o: ["Home visit", "Personal contact", "Personal letters", "All the above"], c: 3 },
-        { q: "Group approach of health education include:", o: ["Lectures", "Conferences", "Workshops", "All the above"], c: 3 },
-        { q: "Which of the following is correct for mass approach of health education?", o: ["Mass media", "Television", "Radio", "All the above"], c: 3 }
-        
-            // 101-150
-        { q: "101. As regards communication, it is:", o: ["One way process", "Two way process", "Passive process", "Non-verbal only"], c: 1 },
-        { q: "102. Which of the following is considered the most effective way of teaching?", o: ["Lecture", "Discussion", "Demonstration", "Reading"], c: 2 },
-        { q: "103. The main aim of health education is:", o: ["To force people to change", "To give information only", "To bring change in health behavior", "To provide medicine"], c: 2 },
-        { q: "104. Which of the following is NOT a component of the communication process?", o: ["Sender", "Message", "Receiver", "Noise elimination"], c: 3 },
-        { q: "105. Feedback is important in communication because:", o: ["It makes the sender happy", "It ensures the message is understood", "It ends the communication", "It creates noise"], c: 1 },
-        { q: "106. In communication, 'Noise' refers to:", o: ["Loud sounds only", "Interference in message transmission", "Music", "Speaking loudly"], c: 1 },
-        { q: "107. Empathy in communication means:", o: ["Feeling sorry for someone", "Understanding others' feelings", "Ignoring others", "Talking more"], c: 1 },
-        { q: "108. Which is a barrier to effective listening?", o: ["Maintaining eye contact", "Taking notes", "Prejudice and bias", "Asking questions"], c: 2 },
-        { q: "109. Verbal communication includes:", o: ["Body language", "Facial expressions", "Written and spoken words", "Gestures"], c: 2 },
-        { q: "110. A good message should be:", o: ["Long and complex", "Short and clear", "Ambiguous", "Passive"], c: 1 },
-        { q: "111. Horizontal communication occurs between:", o: ["Managers and subordinates", "Subordinates and managers", "People at the same level", "Different organizations"], c: 2 },
-        { q: "112. The most common form of non-verbal communication is:", o: ["Touch", "Facial expressions", "Proximity", "Eye contact"], c: 1 },
-        { q: "113. 'Kinesics' is the study of:", o: ["Touch", "Voice tone", "Body movement and gestures", "Space"], c: 2 },
-        { q: "114. 'Proxemics' refers to the use of:", o: ["Time", "Space and distance", "Touch", "Words"], c: 1 },
-        { q: "115. Paralanguage includes which of the following?", o: ["The words used", "Voice pitch and volume", "Body posture", "Eye movement"], c: 1 },
-        { q: "116. Which of the following is an example of a closed-ended question?", o: ["How do you feel?", "What is your name?", "Can you explain this?", "Are you in pain?"], c: 3 },
-        { q: "117. Open-ended questions are used to:", o: ["Get a yes/no answer", "Encourage detailed information", "Limit the conversation", "Stop the receiver from talking"], c: 1 },
-        { q: "118. In the sender-receiver model, decoding is done by:", o: ["The sender", "The receiver", "The channel", "The message"], c: 1 },
-        { q: "119. Encoding is the process of:", o: ["Translating thoughts into a message", "Interpreting a message", "Providing feedback", "Selecting a channel"], c: 0 },
-        { q: "120. Which of the following is NOT a physical barrier to communication?", o: ["Wall", "Distance", "Language difference", "Poor lighting"], c: 2 },
-        { q: "121. Semantic barriers are related to:", o: ["Distance", "Words and meanings", "Body language", "Anxiety"], c: 1 },
-        { q: "122. Which of the following is a psychological barrier?", o: ["Noise", "Language", "Fear and lack of trust", "Distance"], c: 2 },
-        { q: "123. Effective communication requires:", o: ["Only a good sender", "Only a good receiver", "Active participation of both", "No feedback"], c: 2 },
-        { q: "124. 'Listening' and 'Hearing' are:", o: ["The same thing", "Completely different", "Hearing is active, listening is passive", "None of the above"], c: 1 },
-        { q: "125. The first step in the communication process is:", o: ["Encoding", "Developing an idea", "Selecting a channel", "Transmission"], c: 1 },
-        { q: "126. An example of mass communication is:", o: ["A private conversation", "A group meeting", "Television broadcast", "Home visit"], c: 2 },
-        { q: "127. Which is a characteristic of a good listener?", o: ["Interrupting often", "Looking away", "Giving feedback", "Judging the speaker"], c: 2 },
-        { q: "128. Health education for a patient about diabetes is:", o: ["Individual approach", "Mass approach", "Group approach", "Unnecessary"], c: 0 },
-        { q: "129. Poster and leaflets are examples of:", o: ["Verbal communication", "Visual communication", "Audio communication", "Non-verbal communication"], c: 1 },
-        { q: "130. A lecture given to 100 students is an example of:", o: ["Small group", "Large group", "Individual approach", "Mass media"], c: 1 },
-        { q: "131. Which is the most personal form of communication?", o: ["Email", "Telephone", "Face-to-face", "Letter"], c: 2 },
-        { q: "132. Self-motivation is:", o: ["Intrinsic", "Extrinsic", "Forceful", "Non-existent"], c: 0 },
-        { q: "133. Reward and punishment are forms of:", o: ["Intrinsic motivation", "Extrinsic motivation", "No motivation", "Communication"], c: 1 },
-        { q: "134. Which of the following increases motivation?", o: ["Clear goals", "Negative feedback", "Boredom", "High anxiety"], c: 0 },
-        { q: "135. Communication within an organization is:", o: ["Internal", "External", "Always formal", "Always informal"], c: 0 },
-        { q: "136. Grapevine communication is:", o: ["Formal", "Informal", "Written", "Downward"], c: 1 },
-        { q: "137. Clarity in communication means:", o: ["Using complex words", "Using simple and direct language", "Being vague", "Talking fast"], c: 1 },
-        { q: "138. Conciseness means:", o: ["Being very long", "Being brief and to the point", "Using too many examples", "Repeating the message"], c: 1 },
-        { q: "139. Which of the following is a 'soft skill'?", o: ["Typing", "Surgery", "Communication", "Programming"], c: 2 },
-        { q: "140. In health education, 'S' in 'SMART' goals stands for:", o: ["Simple", "Specific", "Slow", "Strong"], c: 1 },
-        { q: "141. 'A' in 'SMART' goals stands for:", o: ["Active", "Attainable", "Always", "Aggressive"], c: 1 },
-        { q: "142. The channel of communication can be:", o: ["Visual", "Auditory", "Tactile", "All the above"], c: 3 },
-        { q: "143. Which of the following is a benefit of group work?", o: ["Conflict only", "Diversity of ideas", "Slow decision making", "Less productivity"], c: 1 },
-        { q: "144. Leadership requires:", o: ["Good communication", "Good listening", "Decision making", "All the above"], c: 3 },
-        { q: "145. Persuasion is the process of:", o: ["Forcing others", "Changing others' beliefs or behaviors", "Giving up", "Ignoring others"], c: 1 },
-        { q: "146. Conflict resolution involves:", o: ["Fighting", "Negotiation and communication", "Winning at all costs", "Ignoring the problem"], c: 1 },
-        { q: "147. A 'Code of Ethics' provides:", o: ["Laws", "Guidelines for professional behavior", "Penalties only", "Technical skills"], c: 1 },
-        { q: "148. Which of the following is NOT a good communication habit?", o: ["Being late", "Active listening", "Being clear", "Respecting others"], c: 0 },
-        { q: "149. The 'Receiver' is also known as:", o: ["The source", "The decoder", "The encoder", "The medium"], c: 1 },
-        { q: "150. Effective health education leads to:", o: ["Better health outcomes", "Higher costs", "More confusion", "Less patient cooperation"], c: 0 }
- ];
+        { q: "Effective verbal communicator:", o: ["Encourages empathically", "Eye contact", "Facial expression", "Body language"], c: 0 },
+        { q: "Level of communication:", o: ["Downwards", "Upwards", "Horizontal", "All the above"], c: 3 },
+        { q: "Good communicator channel:", o: ["Appropriate", "Affordable", "Appealing", "All the above"], c: 3 },
+        { q: "Nonverbal communication include:", o: ["Body language", "Facial expression", "Eye contact", "All the above"], c: 3 },
+        { q: "Methods of nonverbal communication?", o: ["High sounds", "Clear words", "Understanding words", "Body language"], c: 3 },
+        { q: "True for verbal communication?", o: ["Words", "Eye contact", "Facial expression", "Touch"], c: 0 },
+        { q: "Nonverbal method not correct?", o: ["More reliable", "Not reliable", "Touch", "Eye contact"], c: 1 },
+        { q: "Effective verbal communication includes:", o: ["Listens, acknowledges, repeats", "Relax", "Open up", "Eye contact"], c: 0 },
+        { q: "Type of communication?", o: ["Verbal", "Nonverbal", "Intermediate", "Verbal and nonverbal"], c: 3 },
+        { q: "NOT the level of communication?", o: ["Downward", "Upwards", "Lateral", "Vertical"], c: 2 },
+        { q: "Two-way process between sender and receiver?", o: ["Motivation", "Communication", "Ethics", "Learning"], c: 1 },
+        { q: "Not characteristic of good channel?", o: ["Appropriate", "Affordable", "Appealing", "Non appropriate"], c: 3 },
+        { q: "Refers to way message is sent:", o: ["Channel", "Feedback", "Message", "Conversation"], c: 0 },
+        { q: "Character of good senders?", o: ["Know subject", "Interested", "Know audience", "All the above"], c: 3 },
+        { q: "Correct for verbal communication?", o: ["Touch", "Words", "Facial expression", "Eye contact"], c: 1 },
+        { q: "True for downward communication?", o: ["Seniors to juniors", "Directive", "Orders", "All the above"], c: 3 },
+        { q: "Effective communication needs messages:", o: ["Timely", "Meaningful", "Both 1 and 2", "Not suitable"], c: 2 },
+        { q: "Upwards communication is:", o: ["Junior to senior", "Senior to junior", "Between students", "Directive"], c: 0 },
+        { q: "Final stage of understanding:", o: ["Sending", "Communication", "Feedback", "Receiving"], c: 2 },
+        { q: "Nonverbal advantages correct?", o: ["Words", "No interpretation", "Deaf and mute persons", "High voice"], c: 1 },
+        { q: "Character of good receiver?", o: ["Aware", "Willing to accept", "Understand value", "All the above"], c: 3 },
+        { q: "Criteria of effective nonverbal communicator?", o: ["Clear voice", "Eye contact and facial expression", "Relaxes", "2 + 3"], c: 3 },
+        { q: "Health education code of ethics:", o: ["Framework of shared values", "Learners and clients", "Doctors", "Students"], c: 0 },
+        { q: "Correct for good nonverbal communication?", o: ["Observation", "Analysis", "Interpretation", "All the above"], c: 3 },
+        { q: "Upward communication correct?", o: ["Nondirective", "Junior to senior", "Inform problem", "All the above"], c: 3 },
+        { q: "Downward communication correct?", o: ["Senior to junior", "Nondirective", "Junior to senior", "Inform problem"], c: 0 },
+        { q: "Lateral communication correct?", o: ["Colleagues", "Same level", "Save time", "All the above"], c: 3 },
+        { q: "Good receiver correct?", o: ["Should be aware", "Not listen", "Neglect", "Don't have interest"], c: 0 },
+        { q: "Barriers for communication?", o: ["No interest", "Anxiety", "Impaired channels", "All the above"], c: 3 },
+        { q: "Essentials for good communication?", o: ["Atmosphere", "Settings", "Light", "All the above"], c: 3 },
+        { q: "Effective communication requires message:", o: ["Hazy", "Unclear", "Irrelevant", "Clear and accurate"], c: 3 },
+        { q: "Correct for body language?", o: ["Touch", "No eye contact", "Not important", "Irrelevant"], c: 0 },
+        { q: "True for a student?", o: ["Sender", "Receiver", "Teacher", "No feedback"], c: 1 },
+        { q: "Basic component of human relationship:", o: ["Education", "Communication", "Teaching", "Learning"], c: 1 },
+        { q: "Correct for teacher?", o: ["Good sender", "Receiver", "Learner", "Patient"], c: 0 },
+        { q: "Responsibility of health education?", o: ["Meet challenges", "No role", "Minimal role", "No team"], c: 0 },
+        { q: "Methods of health education?", o: ["Direct", "Indirect", "Both direct and indirect", "Mass media"], c: 2 },
+        { q: "Levels of health education?", o: ["Individual", "Group", "General", "All the above"], c: 3 },
+        { q: "Advantages of individual approach?", o: ["Flexibility", "Opportunity", "Motivation", "All the above"], c: 3 },
+        { q: "Lateral communication correct?", o: ["Colleagues", "Seniors", "Juniors", "Senior to junior"], c: 0 },
+        { q: "Good sender correct?", o: ["Level of audience", "Not listen", "Neglect", "No interest"], c: 0 },
+        { q: "Disadvantages of individual education?", o: ["High cost", "Lack of sharing", "1 + 2", "Low cost"], c: 2 },
+        { q: "Essentials for good communication?", o: ["Atmosphere", "Setting", "Light", "All the above"], c: 3 },
+        { q: "Small group teaching:", o: ["2–5 people", "6–30 people", "40 people", "60 people"], c: 0 },
+        { q: "Medium sized group:", o: ["2–5 people", "6–30 people", "40 people", "60 people"], c: 1 },
+        { q: "True for large group?", o: ["Economic", "Positive attitude", "Mass media", "All the above"], c: 3 },
+        { q: "Prenatal care considered:", o: ["Small group", "Medium group", "Large size group", "Learning"], c: 2 },
+        { q: "Correct for individual approach?", o: ["Home visit", "Personal contact", "Letters", "All the above"], c: 3 },
+        { q: "Group approach health education:", o: ["Lectures", "Conferences", "Workshops", "All the above"], c: 3 },
+        { q: "Mass approach health education:", o: ["Mass media", "Television", "Radio", "All the above"], c: 3 },
+
+        // 101-150
+        { q: "As regards communication, it is:", o: ["One way", "Two way process", "Passive", "Non-verbal only"], c: 1 },
+        { q: "Effective way of teaching?", o: ["Lecture", "Discussion", "Demonstration", "Reading"], c: 2 },
+        { q: "Main aim of health education:", o: ["Force change", "Information only", "Change health behavior", "Medicine"], c: 2 },
+        { q: "NOT a component of communication?", o: ["Sender", "Message", "Receiver", "Noise elimination"], c: 3 },
+        { q: "Feedback is important because:", o: ["Sender happy", "Ensure understanding", "Ends process", "Creates noise"], c: 1 },
+        { q: "Noise in communication refers to:", o: ["Loud sounds", "Interference in transmission", "Music", "Speaking loud"], c: 1 },
+        { q: "Empathy means:", o: ["Feeling sorry", "Understanding feelings", "Ignoring", "Talking more"], c: 1 },
+        { q: "Barrier to effective listening?", o: ["Eye contact", "Notes", "Prejudice and bias", "Asking questions"], c: 2 },
+        { q: "Verbal communication includes:", o: ["Body language", "Facial expression", "Written and spoken words", "Gestures"], c: 2 },
+        { q: "A good message should be:", o: ["Long", "Short and clear", "Ambiguous", "Passive"], c: 1 },
+        { q: "Horizontal communication occurs between:", o: ["Seniors/Subordinates", "Subordinates/Seniors", "People at same level", "Different orgs"], c: 2 },
+        { q: "Common form of non-verbal communication:", o: ["Touch", "Facial expressions", "Proximity", "Eye contact"], c: 1 },
+        { q: "Kinesics is the study of:", o: ["Touch", "Voice tone", "Body movement", "Space"], c: 2 },
+        { q: "Proxemics refers to use of:", o: ["Time", "Space and distance", "Touch", "Words"], c: 1 },
+        { q: "Paralanguage includes:", o: ["Words used", "Voice pitch and volume", "Posture", "Eye movement"], c: 1 },
+        { q: "Example of closed-ended question?", o: ["How you feel?", "What is name?", "Explain this?", "Are you in pain?"], c: 3 },
+        { q: "Open-ended questions used to:", o: ["Yes/No answer", "Encourage detail", "Limit conversation", "Stop talk"], c: 1 },
+        { q: "Decoding is done by:", o: ["Sender", "Receiver", "Channel", "Message"], c: 1 },
+        { q: "Encoding is the process of:", o: ["Translating thoughts into message", "Interpreting", "Feedback", "Channel selection"], c: 0 },
+        { q: "NOT a physical barrier?", o: ["Wall", "Distance", "Language difference", "Poor lighting"], c: 2 },
+        { q: "Semantic barriers related to:", o: ["Distance", "Words and meanings", "Body language", "Anxiety"], c: 1 },
+        { q: "Psychological barrier?", o: ["Noise", "Language", "Fear and lack of trust", "Distance"], c: 2 },
+        { q: "Effective communication requires:", o: ["Sender only", "Receiver only", "Active participation of both", "No feedback"], c: 2 },
+        { q: "Listening and Hearing are:", o: ["Same", "Completely different", "Hearing active", "None"], c: 1 },
+        { q: "First step in communication:", o: ["Encoding", "Developing an idea", "Channel", "Transmission"], c: 1 },
+        { q: "Example of mass communication:", o: ["Private talk", "Group meeting", "Television broadcast", "Home visit"], c: 2 },
+        { q: "Characteristic of good listener?", o: ["Interrupting", "Looking away", "Giving feedback", "Judging"], c: 2 },
+        { q: "Health education for diabetic patient is:", o: ["Individual approach", "Mass approach", "Group approach", "Unnecessary"], c: 0 },
+        { q: "Poster and leaflets are:", o: ["Verbal", "Visual communication", "Audio", "Non-verbal"], c: 1 },
+        { q: "Lecture to 100 students is:", o: ["Small group", "Large group", "Individual", "Mass media"], c: 1 },
+        { q: "Most personal form of communication?", o: ["Email", "Telephone", "Face-to-face", "Letter"], c: 2 },
+        { q: "Self-motivation is:", o: ["Intrinsic", "Extrinsic", "Forceful", "Non-existent"], c: 0 },
+        { q: "Reward and punishment are:", o: ["Intrinsic", "Extrinsic motivation", "No motivation", "Communication"], c: 1 },
+        { q: "Increases motivation?", o: ["Clear goals", "Negative feedback", "Boredom", "High anxiety"], c: 0 },
+        { q: "Communication within organization:", o: ["Internal", "External", "Always formal", "Always informal"], c: 0 },
+        { q: "Grapevine communication is:", o: ["Formal", "Informal", "Written", "Downward"], c: 1 },
+        { q: "Clarity in communication means:", o: ["Complex words", "Simple and direct language", "Vague", "Talking fast"], c: 1 },
+        { q: "Conciseness means:", o: ["Very long", "Brief and to the point", "Many examples", "Repeating"], c: 1 },
+        { q: "Which is a soft skill?", o: ["Typing", "Surgery", "Communication", "Programming"], c: 2 },
+        { q: "SMART goals - S stands for:", o: ["Simple", "Specific", "Slow", "Strong"], c: 1 },
+        { q: "SMART goals - A stands for:", o: ["Active", "Attainable", "Always", "Aggressive"], c: 1 },
+        { q: "Channel of communication can be:", o: ["Visual", "Auditory", "Tactile", "All the above"], c: 3 },
+        { q: "Benefit of group work?", o: ["Conflict", "Diversity of ideas", "Slow decisions", "Less productivity"], c: 1 },
+        { q: "Leadership requires:", o: ["Communication", "Listening", "Decision making", "All the above"], c: 3 },
+        { q: "Persuasion is the process of:", o: ["Forcing", "Changing beliefs/behaviors", "Giving up", "Ignoring"], c: 1 },
+        { q: "Conflict resolution involves:", o: ["Fighting", "Negotiation", "Winning", "Ignoring"], c: 1 },
+        { q: "Code of Ethics provides:", o: ["Laws", "Guidelines for professional behavior", "Penalties", "Technical skills"], c: 1 },
+        { q: "NOT a good communication habit?", o: ["Being late", "Active listening", "Clear", "Respect"], c: 0 },
+        { q: "Receiver is also known as:", o: ["Source", "Decoder", "Encoder", "Medium"], c: 1 },
+        { q: "Effective health education leads to:", o: ["Better health outcomes", "Higher costs", "Confusion", "Less cooperation"], c: 0 }
+    ];
 
     let score = 0;
     let answered = 0;
@@ -351,8 +328,6 @@
         questions.forEach((item, qIdx) => {
             const card = document.createElement("div");
             card.className = "quiz-card";
-            card.id = `card-${qIdx}`;
-
             card.innerHTML = `
                 <div class="q-number-badge">${qIdx + 1}</div>
                 <div class="question-text">${item.q}</div>
@@ -385,7 +360,6 @@
             clickedBtn.classList.add("wrong");
             buttons[correctIdx].classList.add("correct");
         }
-
         answered++;
         updateHeader();
     }
