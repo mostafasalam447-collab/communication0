@@ -49,6 +49,7 @@
 <script>
     // تم استخراج الأسئلة من الملف المرفق
         const quizData = [
+        // --- 150 سؤال اختيار من متعدد ---
         { q: "1. As regards communication, barriers of messages include which of the following?", a: ["Easy messages", "Relevant messages", "Unclear messages", "Complete messages"], c: 2 },
         { q: "2. Which of the following is the definition of motivation?", a: ["Internal force that initiates and directs individual", "External force", "Both 1 and 4", "Motivation starts with need, vision, dream"], c: 0 },
         { q: "3. As regards the role of the teacher, which of the following is not correct?", a: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
@@ -198,7 +199,9 @@
         { q: "147. Visual aids include which of the following?", a: ["Radio", "Television", "Posters", "Tape recorder"], c: 2 },
         { q: "148. Mass approach method includes:", a: ["Television", "Home visit", "Lecture", "Discussion"], c: 0 },
         { q: "149. The sender is also known as:", a: ["Decoder", "Encoder", "Receiver", "Channel"], c: 1 },
-       { q: "150. Final element to complete communication loop is:", a: ["Message", "Receiver", "Feedback", "Channel"], c: 2 }
+        { q: "150. Final element to complete communication loop is:", a: ["Message", "Receiver", "Feedback", "Channel"], c: 2 },
+
+        // --- 50 سؤال صح وخطأ ---
         { q: "151. Barrier of communication related to the sender is lack of interest.", a: ["True (صح)", "False (خطأ)"], c: 0 },
         { q: "152. Making inappropriate use of medical terminology is considered as a barrier.", a: ["True (صح)", "False (خطأ)"], c: 0 },
         { q: "153. Nonverbal communication uses words.", a: ["True (صح)", "False (خطأ)"], c: 1 },
@@ -249,12 +252,8 @@
         { q: "198. Effective communication is two-way.", a: ["True (صح)", "False (خطأ)"], c: 0 },
         { q: "199. Body language can contradict words.", a: ["True (صح)", "False (خطأ)"], c: 0 },
         { q: "200. Communication skills can be learned.", a: ["True (صح)", "False (خطأ)"], c: 0 }
-    
     ];
 
-
-
-    // لضمان عمل الـ 200 سؤال، سنقوم بتوليدهم في الحاوية
     const container = document.getElementById('quiz-container');
     
     function initQuiz() {
