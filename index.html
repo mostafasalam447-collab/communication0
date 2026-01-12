@@ -1,260 +1,314 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication Skills Quiz - 50 Questions</title>
+    <title>Communication Question Bank</title>
     <style>
-        /* تصميم الموقع */
         :root {
-            --primary: #4f46e5;
-            --secondary: #6366f1;
-            --success: #22c55e;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
+            --primary: #004a7c;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --bg: #f4f7f6;
+            --white: #ffffff;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg);
-            color: var(--text);
             margin: 0;
+            padding: 10px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
-        .quiz-container {
-            background: var(--card);
-            width: 90%;
-            max-width: 750px;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        .progress-container {
+        /* لوحة العدادات العلوية */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
             width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-
-        .q-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-width: 600px;
             margin-bottom: 20px;
         }
 
-        .q-number {
-            font-weight: 700;
+        .stat-card {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
             color: var(--primary);
-            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* كارت السؤال */
+        .quiz-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 600px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .q-number-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
         .question-text {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: var(--primary);
             font-weight: 600;
+            margin-bottom: 25px;
+            padding-left: 45px; /* مساحة للرقم */
+            line-height: 1.5;
+            text-align: left;
+            direction: ltr;
         }
 
-        .options-grid {
-            display: grid;
-            gap: 15px;
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .option-btn {
-            background: #fff;
-            border: 2px solid #e2e8f0;
-            padding: 18px 25px;
-            border-radius: 12px;
-            text-align: left;
-            font-size: 1.05rem;
+            background: var(--white);
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 1rem;
             transition: all 0.2s;
-            color: var(--text);
-            font-weight: 500;
+            text-align: left;
+            direction: ltr;
         }
 
-        .option-btn:hover {
-            border-color: var(--primary);
-            background: #f5f3ff;
-            transform: translateY(-2px);
+        .option-btn:hover:not(:disabled) {
+            background-color: #f0f7ff;
+            border-color: var(--secondary);
         }
 
-        /* صفحة النتيجة */
+        /* ألوان الإجابة بعد الاختيار */
+        .correct {
+            background-color: #d4edda !important;
+            border-color: var(--success) !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+
+        .wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--danger) !important;
+            color: #721c24 !important;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: none; /* تظهر فقط بعد الإجابة */
+        }
+
         .result-screen {
             display: none;
             text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 600px;
         }
-
-        .result-screen h2 { font-size: 2rem; }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 30px auto;
-            border: 8px solid #e0e7ff;
-        }
-
-        .btn-restart {
-            background: var(--primary);
-            color: white;
-            padding: 15px 35px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-restart:hover { background: var(--secondary); }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <div class="progress-container">
-        <div class="progress-bar" id="bar"></div>
-    </div>
+    <h2 style="color: var(--primary); margin-bottom: 20px;">Communication Final Bank</h2>
 
-    <div id="quiz-ui">
-        <div class="q-header">
-            <span class="q-number" id="q-count">Question 1 of 50</span>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-value" id="stat-total">50</span>
+            <span class="stat-label">إجمالي الأسئلة</span>
         </div>
-        <div class="question-text" id="q-text">Loading...</div>
-        <div class="options-grid" id="options-box"></div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-answered">0</span>
+            <span class="stat-label">تمت الإجابة</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-correct" style="color: var(--success);">0</span>
+            <span class="stat-label">صحيحة</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-percent">0%</span>
+            <span class="stat-label">نسبة النجاح</span>
+        </div>
     </div>
 
-    <div id="result-ui" class="result-screen">
-        <h2>Quiz Completed!</h2>
-        <div class="score-circle" id="score-val">0%</div>
-        <p id="total-correct" style="font-size: 1.2rem; margin-bottom: 30px;"></p>
-        <button class="btn-restart" onclick="location.reload()">Take Quiz Again</button>
+    <div class="quiz-card" id="quiz-container">
+        <div class="q-number-badge" id="q-num">1</div>
+        <div class="question-text" id="q-text">Loading question...</div>
+        <div class="options-list" id="options-box"></div>
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()">السؤال التالي</button>
     </div>
-</div>
+
+    <div class="result-screen" id="result-screen">
+        <h3>انتهى الاختبار!</h3>
+        <p id="final-stats"></p>
+        <button onclick="location.reload()" class="next-btn" style="display: block;">إعادة المحاولة</button>
+    </div>
 
 <script>
     const questions = [
-        { q: "1. As regards communication, barriers of messages include which of the following?", o: ["Easy messages", "Relevant messages", "Unclear messages", "Complete messages"], c: 2 },
-        { q: "2. Which of the following is the definition of motivation?", o: ["It is internal force that initiates and directs the individual to act in a certain manner to satisfy needs.", "It is external force", "Both 1 and 4", "Motivation starts with need, vision, dream"], c: 2 }, // تمت البرمجة لتكون الإجابة الثالثة كما طلبت
-        { q: "3. As regards the role of the teacher, which of the following is not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
-        { q: "4. Group approach method of education includes which of the following?", o: ["Television", "Home visit", "Lecture", "Internet"], c: 2 },
-        { q: "5. As regards importance of motivation, which of the following is not correct?", o: ["Activate behavior", "Give direction", "Increase productivity", "Passive participation"], c: 3 },
-        { q: "6. Which is correct for essentials of communication?", o: ["Do not react instantly and mutter in anger", "Go to the conclusion", "Interrupt the speaker", "Use medical terminology difficult to be understood"], c: 0 },
-        { q: "7. Which of the following is considered correct for verbal communication?", o: ["Need words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
-        { q: "8. Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "More reliable than verbal communication", "Do not need observation", "Cannot be used with deaf and mute persons"], c: 1 },
-        { q: "9. Which is correct for an effective verbal communicator?", o: ["Encourages empathically", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
-        { q: "10. Which of the following are levels of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
-        { q: "11. Which of the following are correct for nonverbal communication?", o: ["Use body language", "Facial expression, eye contact and touch appearance", "Cannot use words", "All the above"], c: 3 },
-        { q: "12. Risk factors that cause health education problems include:", o: ["Good staff training", "Spend time to interact properly with clients", "Good interest in the subject", "Lack staff training"], c: 3 },
-        { q: "13. Group approach of health education include which of the following?", o: ["Internet", "Lectures, workshops and conferences", "Home visit", "Television"], c: 1 },
-        { q: "14. Which of the following are the advantages of group teaching?", o: ["Include small group only", "Economic and give positive attitude development", "High cost", "Lack of sharing between learners"], c: 1 },
-        { q: "15. As regards importance of motivation, which of the following is not correct?", o: ["Intrinsic force", "Give direction", "Increase productivity", "Extrinsic force"], c: 3 },
-        { q: "16. Defined as two-way process involving passing messages to and from between sender and receiver:", o: ["Motivation", "Communication", "Health education code of ethics", "Learning"], c: 1 },
-        { q: "17. Which of the following is considered correct for nonverbal communication?", o: ["Need words to express emotions", "Need observation and understanding", "Direct questioning", "Need voice"], c: 1 },
-        { q: "18. Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "Non reliable than verbal communication", "Do not need observation", "Use body language"], c: 3 },
-        { q: "19. Which is correct for an effective verbal communicator?", o: ["Direct clear questioning", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
-        { q: "20. Which of the following is a type of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
-        { q: "21. Which of the following is not correct about the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "Non appropriate channel"], c: 3 },
-        { q: "22. An effective verbal communicator include:", o: ["Clarifies, listens, acknowledges and repeats", "Relaxes", "Opens up", "Eye contact"], c: 0 },
-        { q: "23. Which of the following are the types of communication?", o: ["Verbal only", "Nonverbal only", "Intermediate", "Verbal and nonverbal"], c: 3 },
-        { q: "24. Which of the following are correct for verbal communication?", o: ["Use body language", "Use words in communication", "Facial expression, eye contact and touch appearance", "Cannot use words"], c: 1 },
-        { q: "25. Which of the following is not the level of communication?", o: ["Downward communication", "Upwards communication", "Lateral communication", "Vertical communication"], c: 2 },
-        { q: "26. Which of the following are characters of a good sender message in communication?", o: ["Choose appropriate communication channel", "Be interested in the subject", "Both 1 and 2", "Lack interest of subject"], c: 2 },
-        { q: "27. … is the person to whom messages is directed.", o: ["Sender", "Receiver", "Channel", "Messages"], c: 1 },
-        { q: "28. … is the final stage that the receiver replies to the sender according to understanding him to a particular topic", o: ["Sending", "Communication", "Feedback", "Receiving"], c: 2 },
-        { q: "29. As regards nonverbal communication advantages, which is correct?", o: ["Need words", "Do not need understanding or interpretation", "More reliable than verbal", "Need high voice"], c: 2 },
-        { q: "30. All the following are requirements of effective communication, which of the following is not correct?", o: ["Clear, concise messages", "Relevant messages", "Meaningful messages", "Non relevant messages"], c: 3 },
-        { q: "31. Criteria of effective nonverbal communicator include which of the following?", o: ["Use clear voice", "Establish eye contact with appropriate facial expression", "Use words", "Use meaningful speech"], c: 1 },
-        { q: "32. … is considered as a barrier of communication:", o: ["Proper channel", "Improper channel", "Good channel", "Relevant channel"], c: 1 },
-        { q: "33. Teaching is defined as:", o: ["Interaction between teacher and learner to bring expected changes in behavior of learner", "Interaction between learners and clients", "Interaction between groups", "Interaction between clients"], c: 0 },
-        { q: "34. As regard rules of motivation which of the following is correct?", o: ["Do not finish what you start", "Do not socialize with others of similar interest", "Take risk and set a major goal", "Do not learn how to learn"], c: 2 },
-        { q: "35. Which of the following is not a barrier of communication?", o: ["Lack of interest", "Good language use", "Anxiety", "Impaired visual and auditory channel"], c: 1 },
-        { q: "36. Which of the following are considered barriers of messages in communication?", o: ["Difficult and irrelevant messages", "Very easy messages", "Clear messages", "Complete messages"], c: 0 },
-        { q: "37. For uncomfortable settings, which of the following is correct?", o: ["Irrelevant in communication process", "Are not essentials for communication", "Are barriers of communication", "Receiver can hear and concentrate with the sender"], c: 2 },
-        { q: "38. As regards upwards communication which is true?", o: ["From below downward", "Nondirective", "Give information", "All the above"], c: 3 },
-        { q: "39. Which of the following is considered correct for verbal communication?", o: ["Need open-ended technique", "Close-ended technique (=direct question)", "Open and close-ended technique", "Not relevant to the end of conversation"], c: 2 },
-        { q: "40. Which of the following is correct for nonverbal communication?", o: ["Direct questioning", "Need words", "Person has less conscious control over his nonverbal behavior", "Person has good conscious control"], c: 2 },
-        { q: "41. Which of the following is the characteristic of nonverbal communication?", o: ["Need good observation", "More reliable than verbal communication", "Need interpretation", "All the above"], c: 3 },
-        { q: "42. Which of the following is the disadvantage of individual approach teaching?", o: ["High cost", "Economic", "Positive attitude development", "Low cost"], c: 0 },
-        { q: "43. Which of the following is correct for the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "All the above"], c: 3 },
-        { q: "44. As regards communication, feedback should not be:", o: ["Absent feedback", "Relevant feedback", "Good feedback", "Complete direct feedback"], c: 0 },
-        { q: "45. Responsibility of sender is:", o: ["Discourage his receivers", "Encourage the receivers", "Has no relation to his team", "Work alone"], c: 1 },
-        { q: "46. Which of the following is the definition of health education?", o: ["Combination of learning experience designed to facilitate voluntary action conducive to health", "It is un voluntary action", "It is not force", "Unhealthy behavior"], c: 0 },
-        { q: "47. As regard the role of the teacher which of the following is not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
-        { q: "48. As regard nonverbal communication represents:", o: ["90%", "80%", "70%", "10%"], c: 0 },
-        { q: "49. Which of the following is considered correct for verbal communication?", o: ["Need words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
-        { q: "50. Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "NOT reliable than verbal communication", "Do not need observation", "Can be used with deaf and mute persons"], c: 1 }
+        { q: "As regards communication, barriers of messages include which of the following?", o: ["Easy messages", "Relevant messages", "Unclear messages", "Complete messages"], c: 2 },
+        { q: "Which of the following is the definition of motivation?", o: ["It is internal force that initiates and directs the individual to act in a certain manner to satisfy needs.", "It is external force", "Both 1 and 4", "Motivation starts with need, vision, dream"], c: 2 },
+        { q: "As regards the role of the teacher, which of the following is not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
+        { q: "Group approach method of education includes which of the following?", o: ["Television", "Home visit", "Lecture", "Internet"], c: 2 },
+        { q: "As regards importance of motivation, which of the following is not correct?", o: ["Activate behavior", "Give direction", "Increase productivity", "Passive participation"], c: 3 },
+        { q: "Which is correct for essentials of communication?", o: ["Do not react instantly and mutter in anger", "Go to the conclusion", "Interrupt the speaker", "Use medical terminology difficult to be understood"], c: 0 },
+        { q: "Which of the following is considered correct for verbal communication?", o: ["Need words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
+        { q: "Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "More reliable than verbal communication", "Do not need observation", "Cannot be used with deaf and mute persons"], c: 1 },
+        { q: "Which is correct for an effective verbal communicator?", o: ["Encourages empathically", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
+        { q: "Which of the following are levels of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
+        { q: "Which of the following are correct for nonverbal communication?", o: ["Use body language", "Facial expression, eye contact and touch appearance", "Cannot use words", "All the above"], c: 3 },
+        { q: "Risk factors that cause health education problems include:", o: ["Good staff training", "Spend time to interact properly with clients", "Good interest in the subject", "Lack staff training"], c: 3 },
+        { q: "Group approach of health education include which of the following?", o: ["Internet", "Lectures, workshops and conferences", "Home visit", "Television"], c: 1 },
+        { q: "Which of the following are the advantages of group teaching?", o: ["Include small group only", "Economic and give positive attitude development", "High cost", "Lack of sharing between learners"], c: 1 },
+        { q: "As regards importance of motivation, which of the following is not correct?", o: ["Intrinsic force", "Give direction", "Increase productivity", "Extrinsic force"], c: 3 },
+        { q: "Defined as two-way process involving passing messages to and from between sender and receiver:", o: ["Motivation", "Communication", "Health education code of ethics", "Learning"], c: 1 },
+        { q: "Which of the following is considered correct for nonverbal communication?", o: ["Need words to express emotions", "Need observation and understanding", "Direct questioning", "Need voice"], c: 1 },
+        { q: "Which of the following is the characteristic of nonverbal communication?", o: ["Easy communication", "Non reliable than verbal communication", "Do not need observation", "Use body language"], c: 3 },
+        { q: "Which is correct for an effective verbal communicator?", o: ["Direct clear questioning", "Depend on eye contact", "Depend on facial expression", "Depend on body language"], c: 0 },
+        { q: "Which of the following is a type of communication?", o: ["Downwards communication", "Upwards communication", "Horizontal communication", "All the above"], c: 3 },
+        { q: "Which of the following is not correct about the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "Non appropriate channel"], c: 3 },
+        { q: "An effective verbal communicator include:", o: ["Clarifies, listens, acknowledges and repeats", "Relaxes", "Opens up", "Eye contact"], c: 0 },
+        { q: "Which of the following are the types of communication?", o: ["Verbal only", "Nonverbal only", "Intermediate", "Verbal and nonverbal"], c: 3 },
+        { q: "Which of the following are correct for verbal communication?", o: ["Use body language", "Use words in communication", "Facial expression, eye contact and touch appearance", "Cannot use words"], c: 1 },
+        { q: "Which of the following is not the level of communication?", o: ["Downward communication", "Upwards communication", "Lateral communication", "Vertical communication"], c: 2 },
+        { q: "Which of the following are characters of a good sender message in communication?", o: ["Choose appropriate communication channel", "Be interested in the subject", "Both 1 and 2", "Lack interest of subject"], c: 2 },
+        { q: "The person to whom messages is directed.", o: ["Sender", "Receiver", "Channel", "Messages"], c: 1 },
+        { q: "Final stage that the receiver replies to the sender according to understanding:", o: ["Sending", "Communication", "Feedback", "Receiving"], c: 2 },
+        { q: "As regards nonverbal communication advantages, which is correct?", o: ["Need words", "Do not need understanding or interpretation", "More reliable than verbal", "Need high voice"], c: 2 },
+        { q: "All the following are requirements of effective communication EXCEPT:", o: ["Clear messages", "Relevant messages", "Meaningful messages", "Non relevant messages"], c: 3 },
+        { q: "Criteria of effective nonverbal communicator include:", o: ["Use clear voice", "Establish eye contact with facial expression", "Use words", "Use meaningful speech"], c: 1 },
+        { q: "Which is considered as a barrier of communication:", o: ["Proper channel", "Improper channel", "Good channel", "Relevant channel"], c: 1 },
+        { q: "Teaching is defined as:", o: ["Interaction to bring expected changes in behavior", "Interaction between learners", "Interaction between groups", "Interaction between clients"], c: 0 },
+        { q: "As regard rules of motivation which is correct?", o: ["Do not finish what you start", "Do not socialize", "Take risk and set a major goal", "Do not learn how to learn"], c: 2 },
+        { q: "Which of the following is not a barrier of communication?", o: ["Lack of interest", "Good language use", "Anxiety", "Impaired visual channel"], c: 1 },
+        { q: "Which are considered barriers of messages in communication?", o: ["Difficult and irrelevant messages", "Very easy messages", "Clear messages", "Complete messages"], c: 0 },
+        { q: "For uncomfortable settings, which is correct?", o: ["Irrelevant", "Not essentials", "Are barriers of communication", "Receiver can concentrate"], c: 2 },
+        { q: "As regards upwards communication which is true?", o: ["From below downward", "Nondirective", "Give information", "All the above"], c: 3 },
+        { q: "Which is considered correct for verbal communication?", o: ["Need open-ended technique", "Close-ended technique", "Open and close-ended technique", "Not relevant"], c: 2 },
+        { q: "Which is correct for nonverbal communication?", o: ["Direct questioning", "Need words", "Less conscious control over behavior", "Good conscious control"], c: 2 },
+        { q: "Which is the characteristic of nonverbal communication?", o: ["Need good observation", "More reliable than verbal", "Need interpretation", "All the above"], c: 3 },
+        { q: "Which is the disadvantage of individual approach teaching?", o: ["High cost", "Economic", "Positive attitude development", "Low cost"], c: 0 },
+        { q: "Which is correct for the characteristic of good communicator channel?", o: ["Appropriate", "Affordable", "Appealing", "All the above"], c: 3 },
+        { q: "As regards communication, feedback should not be:", o: ["Absent feedback", "Relevant feedback", "Good feedback", "Complete feedback"], c: 0 },
+        { q: "Responsibility of sender is:", o: ["Discourage his receivers", "Encourage the receivers", "Has no relation", "Work alone"], c: 1 },
+        { q: "Which of the following is the definition of health education?", o: ["Experience designed to facilitate voluntary action", "Unvoluntary action", "It is force", "Unhealthy behavior"], c: 0 },
+        { q: "As regard the role of the teacher which is not correct?", o: ["Planner", "Clarifier", "Stimulator", "Volunteer"], c: 3 },
+        { q: "As regard nonverbal communication represents:", o: ["90%", "80%", "70%", "10%"], c: 0 },
+        { q: "Which is considered correct for verbal communication?", o: ["Need words to express emotions", "Active listening", "Direct questioning", "All the above"], c: 3 },
+        { q: "Which is the characteristic of nonverbal communication?", o: ["Easy communication", "NOT reliable", "Do not need observation", "Used with deaf and mute"], c: 1 }
     ];
 
-    let current = 0;
+    let currentIdx = 0;
     let score = 0;
+    let answeredCount = 0;
 
-    function renderQuestion() {
-        const qData = questions[current];
-        document.getElementById("q-count").innerText = `Question ${current + 1} of ${questions.length}`;
-        document.getElementById("q-text").innerText = qData.q;
+    function initQuiz() {
+        const q = questions[currentIdx];
+        document.getElementById("q-num").innerText = currentIdx + 1;
+        document.getElementById("q-text").innerText = q.q;
+        document.getElementById("next-btn").style.display = "none";
         
         const box = document.getElementById("options-box");
         box.innerHTML = "";
         
-        qData.o.forEach((opt, idx) => {
+        q.o.forEach((opt, i) => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
             btn.innerText = opt;
-            btn.onclick = () => check(idx);
+            btn.onclick = () => checkAnswer(i, btn);
             box.appendChild(btn);
         });
-
-        const progress = ((current) / questions.length) * 100;
-        document.getElementById("bar").style.width = progress + "%";
     }
 
-    function check(idx) {
-        if(idx === questions[current].c) score++;
-        current++;
-        if(current < questions.length) {
-            renderQuestion();
+    function checkAnswer(selectedIdx, btn) {
+        const correctIdx = questions[currentIdx].c;
+        const allButtons = document.querySelectorAll(".option-btn");
+        
+        // تعطيل كل الأزرار فور الاختيار (تثبيت الإجابة)
+        allButtons.forEach(b => b.disabled = true);
+        
+        if(selectedIdx === correctIdx) {
+            btn.classList.add("correct");
+            score++;
         } else {
-            showFinal();
+            btn.classList.add("wrong");
+            allButtons[correctIdx].classList.add("correct");
+        }
+
+        answeredCount++;
+        updateStats();
+        document.getElementById("next-btn").style.display = "block";
+    }
+
+    function updateStats() {
+        document.getElementById("stat-answered").innerText = answeredCount;
+        document.getElementById("stat-correct").innerText = score;
+        const percent = Math.round((score / answeredCount) * 100);
+        document.getElementById("stat-percent").innerText = percent + "%";
+    }
+
+    function nextQuestion() {
+        currentIdx++;
+        if(currentIdx < questions.length) {
+            initQuiz();
+        } else {
+            showEndScreen();
         }
     }
 
-    function showFinal() {
-        document.getElementById("bar").style.width = "100%";
-        document.getElementById("quiz-ui").style.display = "none";
-        const result = document.getElementById("result-ui");
-        result.style.display = "block";
-        const percent = Math.round((score / questions.length) * 100);
-        document.getElementById("score-val").innerText = percent + "%";
-        document.getElementById("total-correct").innerText = `You answered ${score} out of ${questions.length} questions correctly.`;
+    function showEndScreen() {
+        document.getElementById("quiz-container").style.display = "none";
+        document.getElementById("result-screen").style.display = "block";
+        document.getElementById("final-stats").innerText = `لقد أجبت على ${score} من إجمالي ${questions.length} سؤال بشكل صحيح.`;
     }
 
-    renderQuestion();
+    initQuiz();
 </script>
-
 </body>
 </html>
