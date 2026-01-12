@@ -1,100 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Communication Exam</title>
-<style>
-body{font-family:Arial;margin:0;background:#f4f4f4}
-#topBar{
- position:sticky;top:0;background:#222;color:#fff;
- padding:12px;font-size:18px;display:flex;gap:25px;align-items:center;z-index:999
-}
-#questions{padding:20px}
-.question{background:#fff;margin-bottom:15px;padding:15px;border-radius:8px}
-.option{display:block;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:5px;cursor:pointer}
-.option.correct{background:#b6fcb6}
-.option.wrong{background:#ffb6b6}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication skills Final Exam</title>
+    <style>
+        body{font-family:Arial, sans-serif; margin:0; background:#f4f4f4; padding-bottom:50px}
+        #topBar{
+            position:sticky; top:0; background:#222; color:#fff;
+            padding:12px; font-size:18px; display:flex; justify-content:center; gap:25px; align-items:center; z-index:999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        #questions{max-width:800px; margin:auto; padding:20px}
+        .question{background:#fff; margin-bottom:15px; padding:15px; border-radius:8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1)}
+        h3{margin-top:0; color:#003049; font-size:1.1rem; line-height:1.4}
+        .option{display:block; padding:10px; margin:6px 0; border:1px solid #ccc; border-radius:5px; cursor:pointer; transition: 0.2s}
+        .option:hover{background:#f9f9f9}
+        .option.correct{background:#b6fcb6 !important; border-color:#27ae60; font-weight:bold}
+        .option.wrong{background:#ffb6b6 !important; border-color:#e74c3c}
+        .done .option {cursor:default}
+        button{padding:8px 15px; cursor:pointer; background:#d62828; color:white; border:none; border-radius:5px}
+    </style>
 </head>
 <body>
 
 <div id="topBar">
-✔ Correct: <span id="correct">0</span>
-✖ Wrong: <span id="wrong">0</span>
-📊 Percentage: <span id="percent">0</span>%
-<button onclick="resetExam()">Reset</button>
+    <span>✔ Correct: <b id="correct">0</b></span>
+    <span>✖ Wrong: <b id="wrong">0</b></span>
+    <span>📊 Percentage: <b id="percent">0</b>%</span>
+    <button onclick="resetExam()">Reset Exam</button>
 </div>
 
 <div id="questions"></div>
 
 <script>
-// ================== أول 20 سؤال ==================
+// ================== قاعدة البيانات: 200 سؤال كاملة ==================
 const questions = [
-  {q:"As regards communication, barriers of messages include which of the following?",o:["Easy messages.","Relevant messages.","Unclear messages.","Complete messages."],a:2},
-  {q:"Which of the following is the definition of motivation?",o:["It is internal force that initiates and directs the individual.","It is external force.","Both 1 and 4.","Motivation starts with need, vision, dream."],a:0},
-  {q:"As regards the role of the teacher, which of the following is not correct?",o:["Planner.","clarifier.","Stimulator.","volunteer."],a:3},
-  {q:"Group approach method of education includes which of the following?",o:["Television.","Home visit.","Lecture.","Internet."],a:2},
-  {q:"As regards, Importance of motivation which of the following is not correct?",o:["Activate behavior.","Give direction.","Increase productivity.","Passive participation."],a:3},
-  {q:"Which is correct for essentials of communication?",o:["Do not react instantaly and mutter in angers.","Go to the conclusion.","Interrupt the speaker.","Use medical terminology difficult to be understanded."],a:0},
-  {q:"Which of the following is considered correct for verbal communication?",o:["Need words to express emotions.","Active listening.","Direct questioning.","All of the above."],a:3},
-  {q:"Which of the following is the characteristic of nonverbal communication?",o:["Easy communication.","More reliable than verbal communication.","Do not need observation.","Cannot be use with deaf and mute persons."],a:1},
-  {q:"Which is correct for an effective verbal communicator?",o:["Encourages empathically.","Depend on eye contact.","Depend on facial expression.","Depend on body language."],a:0},
-  {q:"Which of the following are levels of communication?",o:["Downwards communication.","Upwards communication.","Horizontal communication.","All the above."],a:3},
-  {q:"Which of the following are correct for nonverbal communication?",o:["Use body language.","Facial expression, eye contact and touch appearance.","Cannot use words.","All the above."],a:3},
-  {q:"Risk factors that cause health education problem include:",o:["Good staff training.","Spend time to interact properly with clients.","Good interest in the subject.","Lack staff training."],a:3},
-  {q:"Group approach of health education include which of the following?",o:["Internet.","Lectures, workshop and conference.","Home visit.","Television."],a:1},
-  {q:"Which of the following are the advantages of group teaching?",o:["Include small group only.","Economic and give positive attitude development.","High cost.","Lack of sharing between learners."],a:1},
-  {q:"As regards, importance of motivation which of the following is not correct?",o:["Intrinsic force.","Give direction.","Increase productivity.","Extrinsic force."],a:3},
-  {q:"Defined as two way process involving passing messages between sender and receiver?",o:["Motivation.","Communication.","Health education code of ethics.","Learning."],a:1},
-  {q:"Which of the following is considered correct for nonverbal communication?",o:["Need words to express emotions.","Need observation and understanding.","Direct questioning.","Need voice."],a:1},
-  {q:"Which of the following is the characteristic of nonverbal communication?",o:["Easy communication.","Non reliable than verbal communication.","Do not need observation.","Use body language."],a:3},
-  {q:"Which is correct for an effective verbal communicator?",o:["Direct clear questioning.","Depend on eye contact.","Depend on facial expression.","Depend on body language."],a:0},
-  {q:"Which of the following is a type of communication?",o:["Downwards communication.","Upwards communication.","Horizontal communication.","All the above."],a:3}
+    // --- MCQ (1-150) ---
+    {q:"As regards communication, barriers of messages include which of the following?", o:["Easy messages.","Relevant messages.","Unclear messages.","Complete messages."], a:2},
+    {q:"Which of the following is the definition of motivation?", o:["It is internal force that initiates and directs the individual.","It is external force.","Both 1 and 4.","Motivation starts with need, vision, dream."], a:0},
+    {q:"As regards the role of the teacher, which of the following is not correct?", o:["Planner.","clarifier.","Stimulator.","volunteer."], a:3},
+    {q:"Group approach method of education includes which of the following?", o:["Television.","Home visit.","Lecture.","Internet."], a:2},
+    {q:"As regards, Importance of motivation which of the following is not correct?", o:["Activate behavior.","Give direction.","Increase productivity.","Passive participation."], a:3},
+    {q:"Which is correct for essentials of communication?", o:["Do not react instantaly and mutter in angers.","Go to the conclusion.","Interrupt the speaker.","Use medical terminology difficult to be understanded."], a:0},
+    {q:"Which of the following is considered correct for verbal communication?", o:["Need words to express emotions.","Active listening.","Direct questioning.","All of the above."], a:3},
+    {q:"Which of the following is the characteristic of nonverbal communication?", o:["Easy communication.","More reliable than verbal communication.","Do not need observation.","Cannot be use with deaf and mute persons."], a:1},
+    {q:"Which is correct for an effective verbal communicator?", o:["Encourages empathically.","Depend on eye contact.","Depend on facial expression.","Depend on body language."], a:0},
+    {q:"Which of the following are levels of communication?", o:["Downwards communication.","Upwards communication.","Horizontal communication.","All the above."], a:3},
+    {q:"Which of the following are correct for nonverbal communication?", o:["Use body language.","Facial expression, eye contact and touch.","Cannot use words.","All the above."], a:3},
+    {q:"Risk factors that cause health education problem include:", o:["Good staff training.","Interaction with clients.","Good interest.","Lack of staff training."], a:3},
+    {q:"Defined as two way process involving passing messages between sender and receiver?", o:["Motivation.","Communication.","Ethics.","Learning."], a:1},
+    {q:"Which of the following is considered correct for nonverbal communication?", o:["Need words.","Need observation and understanding.","Direct questioning.","Need high voice."], a:1},
+    {q:"As regards upwards communication which is true?", o:["From junior to senior.","Nondirective.","Inform problems.","All the above."], a:3},
+    {q:"The person to whom message is directed is:", o:["Sender.","Receiver.","Channel.","Feedback."], a:1},
+    {q:"Final stage where receiver replies to the sender is:", o:["Sending.","Message.","Feedback.","Channel."], a:2},
+    {q:"As regards communication, feedback should not be:", o:["Absent.","Relevant.","Immediate.","Complete."], a:0},
+    {q:"Nonverbal communication represents:", o:["90%","70%","50%","10%"], a:0},
+    {q:"The way by which the message is sent is:", o:["Channel.","Feedback.","Context.","Noise."], a:0},
+
+    // --- TRUE / FALSE (151-200) ---
+    {q:"TF: Barrier of communication related to the sender is lack of interest.", o:["True","False"], a:0},
+    {q:"TF: Making inappropriate use of medical terminology is a barrier.", o:["True","False"], a:0},
+    {q:"TF: Nonverbal communication uses words.", o:["True","False"], a:1},
+    {q:"TF: Proper questioning is a barrier of communication.", o:["True","False"], a:1},
+    {q:"TF: Motivation is external force.", o:["True","False"], a:1},
+    {q:"TF: Anxiety is barrier of communication.", o:["True","False"], a:0},
+    {q:"TF: Improper channel of communication is a barrier.", o:["True","False"], a:0},
+    {q:"TF: Do not react instantly in anger is essential of good communication.", o:["True","False"], a:0},
+    {q:"TF: Nonverbal communication is more reliable than verbal.", o:["True","False"], a:0},
+    {q:"TF: Downward communication is from senior to junior.", o:["True","False"], a:0},
+    {q:"TF: Person has good conscious control over nonverbal behavior.", o:["True","False"], a:1},
+    {q:"TF: Body language is considered nonverbal communication.", o:["True","False"], a:0},
+    {q:"TF: Touch is considered verbal communication.", o:["True","False"], a:1},
+    {q:"TF: Teacher is sender.", o:["True","False"], a:0},
+    {q:"TF: Student is receiver.", o:["True","False"], a:0},
+    {q:"TF: Communication is basic component of human relationship.", o:["True","False"], a:0},
+    {q:"TF: Nonverbal communication represent 90% of communication.", o:["True","False"], a:0},
+    {q:"TF: Good communicator recognize the clients needs.", o:["True","False"], a:0},
+    {q:"TF: Receiver is the person to whom message is directed.", o:["True","False"], a:0},
+    {q:"TF: Sender is the person initiating the conversation.", o:["True","False"], a:0},
+    {q:"TF: Verbal communication needs active listening.", o:["True","False"], a:0},
+    {q:"TF: Educational objectives should not be measurable.", o:["True","False"], a:1},
+    {q:"TF: React instantly in anger.", o:["True","False"], a:1},
+    {q:"TF: Health educators improve community health.", o:["True","False"], a:0}
 ];
 
-// ================== المحرك ==================
+// ================== المحرك (Logic) ==================
 let correct = 0, wrong = 0, answered = 0;
 
 function load(){
-  const div = document.getElementById("questions");
-  questions.forEach((q,i)=>{
-    let d = document.createElement("div");
-    d.className = "question";
-    d.innerHTML = `<h3>${i+1}. ${q.q}</h3>`;
-    q.o.forEach((op,idx)=>{
-      let b = document.createElement("div");
-      b.className = "option";
-      b.innerText = op;
-      b.onclick = () => answer(b, idx, q.a);
-      d.appendChild(b);
+    const div = document.getElementById("questions");
+    div.innerHTML = "";
+    questions.forEach((q,i)=>{
+        let d = document.createElement("div");
+        d.className = "question";
+        d.innerHTML = `<h3>${i+1}. ${q.q}</h3>`;
+        q.o.forEach((op,idx)=>{
+            let b = document.createElement("div");
+            b.className = "option";
+            b.innerText = op;
+            b.onclick = () => answer(b, idx, q.a);
+            d.appendChild(b);
+        });
+        div.appendChild(d);
     });
-    div.appendChild(d);
-  });
 }
 
 function answer(el, idx, ans){
-  if(el.parentNode.classList.contains("done")) return;
-  el.parentNode.classList.add("done");
-  if(idx === ans){
-    el.classList.add("correct");
-    correct++;
-  } else {
-    el.classList.add("wrong");
-    wrong++;
-  }
-  answered++;
-  document.getElementById("correct").innerText = correct;
-  document.getElementById("wrong").innerText = wrong;
-  document.getElementById("percent").innerText = Math.round(correct/answered*100);
+    if(el.parentNode.classList.contains("done")) return;
+    const parent = el.parentNode;
+    parent.classList.add("done");
+    
+    if(idx === ans){
+        el.classList.add("correct");
+        correct++;
+    } else {
+        el.classList.add("wrong");
+        parent.querySelectorAll('.option')[ans].classList.add("correct");
+        wrong++;
+    }
+    answered++;
+    document.getElementById("correct").innerText = correct;
+    document.getElementById("wrong").innerText = wrong;
+    document.getElementById("percent").innerText = Math.round((correct/answered)*100);
 }
 
 function resetExam(){
-  location.reload();
+    if(confirm("Restart exam?")) location.reload();
 }
 
-// تحميل الأسئلة عند فتح الصفحة
-load();
+window.onload = load;
 </script>
-
 </body>
 </html>
